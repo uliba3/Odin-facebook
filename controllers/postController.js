@@ -23,7 +23,7 @@ exports.index_post = [
         // Create a Book object with escaped and trimmed data.
         const post = new Post({
           content: req.body.content,
-          postedDate: today,
+          date: today,
         });
     
         if (!errors.isEmpty()) {

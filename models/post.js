@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = ({
     content: { type: String, required: true},
-    postedDate: { type: Date },
+    date: { type: Date },
 });
 
 // Export model

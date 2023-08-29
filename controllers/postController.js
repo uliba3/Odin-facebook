@@ -1,3 +1,4 @@
+//controllers/postController.js
 const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 
@@ -41,3 +42,23 @@ exports.index_post = [
         }
       })
 ]
+
+exports.delete_post = asyncHandler(async (req, res, next) => {
+  const postId = req.params.id;
+  console.log("Attempting to delete post with ID:", postId);
+
+  try {
+    // Find the post by ID and delete it
+    const result = await Post.findByIdAndDelete(postId).exec();
+    if (!result) {
+      console.log("Post not found for deletion.");
+      return res.redirect("/");
+    }
+
+    console.log("Post successfully deleted:", result);
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.redirect("/");
+  }
+});

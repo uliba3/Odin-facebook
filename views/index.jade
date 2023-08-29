@@ -2,4 +2,16 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  form(method='POST' action='')
+    div.form-group
+      label(for='content') content:
+      textarea#summary.form-control(type='textarea', placeholder='content' name='content' required='true') #{undefined===post? '' : post.content}
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+  ul
+    each post in posts
+      li #{post.content}

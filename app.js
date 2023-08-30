@@ -1,4 +1,6 @@
 //app.js
+require('dotenv').config(); // Load environment variables from .env file
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,7 +15,7 @@ var app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://selluliba3:yRYzlGcEn3Zl68MA@cluster0.srh5cdu.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI;
 
 main().catch((err) => console.log(err));
 async function main() {

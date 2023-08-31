@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title Authentication Example
+
+  body
+    h1 Authentication Example
+
+    if user
+      p Welcome, #{user.username}!
+      p
+        form(action='/log-out', method='post')
+            button(type='submit') Log Out
+
+    else
+      form(action='/log-in', method='POST')
+        label(for='username') Username:
+        input(type='text', name='username')
+        label(for='password') Password:
+        input(type='password', name='password')
+        button(type='submit') Log In
+
+      form(action='/sign-up', method='POST')
+        label(for='username') Username:
+        input(type='text', name='username')
+        label(for='password') Password:
+        input(type='password', name='password')
+        button(type='submit') Sign Up

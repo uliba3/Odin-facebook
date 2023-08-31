@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = ({
+    author: { type: Schema.Types.ObjectId, required: true},
     content: { type: String, required: true},
     date: { type: Date },
 });

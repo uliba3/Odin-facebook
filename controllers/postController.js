@@ -23,6 +23,7 @@ exports.index_post = [
     
         // Create a Book object with escaped and trimmed data.
         const post = new Post({
+          author: req.user._id,
           content: req.body.content,
           date: today,
         });
@@ -38,7 +39,7 @@ exports.index_post = [
         } else {
           // Data from form is valid. Save book.
           await post.save();
-          res.redirect("/");
+          res.redirect(req.user.url);
         }
       })
 ]

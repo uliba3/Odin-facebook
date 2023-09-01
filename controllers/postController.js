@@ -1,13 +1,15 @@
 //controllers/postController.js
 const Post = require("../models/post");
 const User = require("../models/user");
+const Friendship = require("../models/friendship");
 const { body, validationResult } = require("express-validator");
 
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res, next) => {
     const userPosts = await Post.find({ author: req.user._id }).exec();
-    const allUsersExceptCurrent = await User.find({ username: { $ne: req.user.username } }).exec();
+    const friendUsers = await User.find({ })
+    
     res.render("index", {title: "Posts", posts: userPosts, users: allUsersExceptCurrent});
 });
 

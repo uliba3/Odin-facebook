@@ -16,6 +16,12 @@ block content
       for error in errors
         li!= error.msg
   ul
+  each user in users 
+    li 
+      | #{user.username} 
+      form(method='POST', action='/index/friendRequest/' + user._id)
+        button.btn.btn-danger(type='submit') Friend request
+  ul
   each post in posts
     li
       | #{post.author} #{post.date} #{post.content}

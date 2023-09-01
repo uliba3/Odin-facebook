@@ -1,13 +1,14 @@
 //controllers/postController.js
 const Post = require("../models/post");
+const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res, next) => {
     const userPosts = await Post.find({ author: req.user._id }).exec();
-
-    res.render("index", {title: "Posts", posts: userPosts, user: req.user});
+    const allUsersExceptCurrent = await User.find({ username: { $ne: req.user.username } }).exec();
+    res.render("index", {title: "Posts", posts: userPosts, users: allUsersExceptCurrent});
 });
 
 exports.index_post = [
@@ -21,7 +22,7 @@ exports.index_post = [
         const errors = validationResult(req);
         const today = new Date(); 
     
-        // Create a Book object with escaped and trimmed data.
+        // Create a Post object with escaped and trimmed data.
         const post = new Post({
           author: req.user._id,
           content: req.body.content,

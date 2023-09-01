@@ -4,7 +4,9 @@ const router = express.Router();
 const passport = require("../passport-config"); // Import Passport
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.js");
+
 const user_controller = require("../controllers/userController"); // Import your User model
+const post_controller = require("../controllers/postController");
 
 router.get("/", user_controller.index);
 
@@ -37,5 +39,9 @@ router.post("/log-out", (req, res, next) => {
         res.redirect("/");
     });
 });
+
+router.get("/index/", post_controller.index);
+router.post("/index/add", post_controller.index_post);
+router.post("/index/delete/:id", post_controller.delete_post);
 
 module.exports = router;

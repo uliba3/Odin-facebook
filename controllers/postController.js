@@ -39,7 +39,7 @@ exports.index_post = [
         } else {
           // Data from form is valid. Save book.
           await post.save();
-          res.redirect(req.user.url);
+          res.redirect("/:username");
         }
       })
 ]

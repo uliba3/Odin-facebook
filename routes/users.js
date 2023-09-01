@@ -44,4 +44,6 @@ router.get("/index", post_controller.index);
 router.post("/index/add", post_controller.index_post);
 router.post("/index/delete/:id", post_controller.delete_post);
 
+router.post("/index/sendRequest/:id", )
+
 module.exports = router;

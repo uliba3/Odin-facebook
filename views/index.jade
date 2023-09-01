@@ -19,7 +19,7 @@ block content
   each user in users 
     li 
       | #{user.username} 
-      form(method='POST', action='/index/friendRequest/' + user._id)
+      form(method='POST', action='/index/sendRequest/' + user._id)
         button.btn.btn-danger(type='submit') Friend request
   ul
   each post in posts

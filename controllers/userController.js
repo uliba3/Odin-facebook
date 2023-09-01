@@ -6,8 +6,8 @@ const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res) => {
     if(req.user){
-        res.render("index.jade");
+        res.redirect("/index");
     } else {
-        res.render("auth", { user: req.user });
+        res.render("auth");
     }
 });

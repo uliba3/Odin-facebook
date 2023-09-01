@@ -5,9 +5,9 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res, next) => {
-    const allPosts = await Post.find().exec();
+    const userPosts = await Post.find({ author: req.user._id }).exec();
 
-    res.render("index", {title: "Posts", posts: allPosts, user: req.user});
+    res.render("index", {title: "Posts", posts: userPosts, user: req.user});
 });
 
 exports.index_post = [
@@ -30,10 +30,10 @@ exports.index_post = [
     
         if (!errors.isEmpty()) {
           // There are errors. Render form again with sanitized values/error messages.
-          const allPosts = await Post.find().exec();
+          const userPosts = await Post.find({ author: req.user._id }).exec();
           res.render("index", {
             title: "Posts",
-            posts: allPosts,
+            posts: userPosts,
             errors: errors.array(),
           });
         } else {

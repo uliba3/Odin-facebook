@@ -7,7 +7,7 @@ const asyncHandler = require("express-async-handler");
 exports.index = asyncHandler(async(req, res, next) => {
     const allPosts = await Post.find().exec();
 
-    res.render("index", {title: "Posts", posts: allPosts});
+    res.render("index", {title: "Posts", posts: allPosts, user: req.user});
 });
 
 exports.index_post = [
@@ -39,7 +39,7 @@ exports.index_post = [
         } else {
           // Data from form is valid. Save book.
           await post.save();
-          res.redirect("/:username");
+          res.redirect("/index");
         }
       })
 ]
@@ -53,13 +53,13 @@ exports.delete_post = asyncHandler(async (req, res, next) => {
     const result = await Post.findByIdAndDelete(postId).exec();
     if (!result) {
       console.log("Post not found for deletion.");
-      return res.redirect("/");
+      return res.redirect("/index");
     }
 
     console.log("Post successfully deleted:", result);
-    res.redirect("/");
+    res.redirect("/index");
   } catch (error) {
     console.error("Error deleting post:", error);
-    res.redirect("/");
+    res.redirect("/index");
   }
 });

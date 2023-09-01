@@ -10,8 +10,6 @@ const session = require("express-session");
 const passport = require("./passport-config");
 const LocalStrategy = require("passport-local").Strategy;
 
-
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 const User = require("./models/user");

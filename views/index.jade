@@ -3,7 +3,7 @@ extends layout
 
 block content
   h1= title
-  form(method='POST' action='/add')
+  form(method='POST' action='/index/add')
     div.form-group
       label(for='content') content:
       textarea#summary.form-control(type='textarea', placeholder='content' name='content' required='true') #{undefined===post? '' : post.content}
@@ -16,6 +16,6 @@ block content
   ul
   each post in posts
     li
-      | #{post.date} #{post.content}
-      form(method='POST', action='/delete/' + post._id)
+      | #{post.author} #{post.date} #{post.content}
+      form(method='POST', action='/index/delete/' + post._id)
         button.btn.btn-danger(type='submit') Delete

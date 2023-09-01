@@ -26,7 +26,7 @@ router.post("/sign-up", async (req, res, next) => {
 
 router.post("/log-in", (req, res) => {
     passport.authenticate("local", {
-        successRedirect: `/${req.body.username}`,
+        successRedirect: "/index",
         failureRedirect: "/"
     })(req, res);
 });
@@ -40,7 +40,7 @@ router.post("/log-out", (req, res, next) => {
     });
 });
 
-router.get("/index/", post_controller.index);
+router.get("/index", post_controller.index);
 router.post("/index/add", post_controller.index_post);
 router.post("/index/delete/:id", post_controller.delete_post);
 

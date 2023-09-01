@@ -3,6 +3,8 @@ extends layout
 
 block content
   h1= title
+  form(method='POST' action='/log-out')
+    button.btn.btn-primary(type='submit') log-out
   form(method='POST' action='/index/add')
     div.form-group
       label(for='content') content:

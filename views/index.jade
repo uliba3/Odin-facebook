@@ -15,15 +15,24 @@ block content
     ul
       for error in errors
         li!= error.msg
-  ul
-  each user in users 
+  //-ul
+  //-each user in users 
     li 
       | #{user.username} 
       form(method='POST', action='/index/sendRequest/' + user._id)
         button.btn.btn-danger(type='submit') Friend request
   ul
-  each post in posts
-    li
-      | #{post.author} #{post.date} #{post.content}
-      form(method='POST', action='/index/delete/' + post._id)
-        button.btn.btn-danger(type='submit') Delete
+    for friend in friends
+      | #{friend.user}
+  ul 
+    for requested in requesteds 
+      | #{requested.user} Requested
+  ul 
+    for request in requests 
+      | #{request.user} Request
+  ul
+    for post in posts
+      li
+        | #{post.author} #{post.date} #{post.content}
+        form(method='POST', action='/index/delete/' + post._id)
+          button.btn.btn-danger(type='submit') Delete

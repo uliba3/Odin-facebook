@@ -16,6 +16,7 @@ exports.index = asyncHandler(async(req, res, next) => {
     });
     const requestedUsers = await Friendship.find({user: req.user._id, status: 'pending'});
     const requestFromUsers = await Friendship.find({friendId: req.user._id, status: 'pending'});
+
     const excludedUserIds = [
       req.user._id, // Exclude the current user
       ...friendUsers.map(friendship => friendship.friend),
@@ -73,7 +74,7 @@ exports.index_post = [
 
 exports.delete_post = asyncHandler(async (req, res, next) => {
   const postId = req.params.id;
-  console.log("Attempting to delete post with ID:", postId);
+  //console.log("Attempting to delete post with ID:", postId);
 
   try {
     // Find the post by ID and delete it

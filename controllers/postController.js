@@ -16,7 +16,25 @@ exports.index = asyncHandler(async(req, res, next) => {
     });
     const requestedUsers = await Friendship.find({user: req.user._id, status: 'pending'});
     const requestFromUsers = await Friendship.find({friendId: req.user._id, status: 'pending'});
-    res.render("index", {title: "Posts", posts: userPosts, friends: friendUsers, requesteds: requestedUsers, requests: requestFromUsers});
+    const excludedUserIds = [
+      req.user._id, // Exclude the current user
+      ...friendUsers.map(friendship => friendship.friend),
+      ...requestedUsers.map(friendship => friendship.friend),
+      ...requestFromUsers.map(friendship => friendship.user),
+    ];
+  
+    const users = await User.find({ _id: { $nin: excludedUserIds } }).exec();
+  
+    // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
+  
+    res.render("index", {
+      title: "Posts",
+      posts: userPosts,
+      friends: friendUsers,
+      requesteds: requestedUsers,
+      requests: requestFromUsers,
+      users: users, // Pass the excluded users to the template
+    });
 });
 
 exports.index_post = [

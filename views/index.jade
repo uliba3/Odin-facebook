@@ -23,13 +23,16 @@ block content
         button.btn.btn-danger(type='submit') Friend request
   ul
     for friend in friends
-      | #{friend.user}
+      | #{friend.username}
   ul 
     for requested in requesteds 
-      | #{requested.user} Requested
+      | #{requested.username} Requested
   ul 
     for request in requests 
-      | #{request.user} Request
+      | #{request.username} Request
+  ul 
+    for user in users 
+      | #{user.username} User
   ul
     for post in posts
       li

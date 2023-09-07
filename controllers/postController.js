@@ -7,35 +7,36 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res, next) => {
-    const userPosts = await Post.find({ author: req.user._id }).exec();
-    const friendUsers = await Friendship.find({ 
+  const myId = req.user._id;
+  const userPosts = await Post.find({ author: myId }).exec();
+  const friendUsers = await Friendship.find({ 
       $or: [
-        {user: req.user._id, status: 'accepted'},
-        { friendId: req.user._id, status: 'accepted'}
+        {user: myId, status: 'accepted'},
+        { friendId: myId, status: 'accepted'}
       ] 
-    });
-    const requestedUsers = await Friendship.find({user: req.user._id, status: 'pending'});
-    const requestFromUsers = await Friendship.find({friendId: req.user._id, status: 'pending'});
+  });
+  const requestedUsers = await Friendship.find({user: myId, status: 'pending'});
+  const requestFromUsers = await Friendship.find({friendId: myId, status: 'pending'});
 
-    const excludedUserIds = [
-      req.user._id, // Exclude the current user
-      ...friendUsers.map(friendship => friendship.friend),
-      ...requestedUsers.map(friendship => friendship.friend),
-      ...requestFromUsers.map(friendship => friendship.user),
-    ];
-  
-    const users = await User.find({ _id: { $nin: excludedUserIds } }).exec();
-  
-    // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
-  
-    res.render("index", {
-      title: "Posts",
-      posts: userPosts,
-      friends: friendUsers,
-      requesteds: requestedUsers,
-      requests: requestFromUsers,
-      users: users, // Pass the excluded users to the template
-    });
+  const excludedUserIds = [
+    myId, // Exclude the current user
+    ...friendUsers.map(friendship => friendship.friend),
+    ...requestedUsers.map(friendship => friendship.friend),
+    ...requestFromUsers.map(friendship => friendship.user),
+  ];
+
+  const users = await User.find({ _id: { $nin: excludedUserIds } }).exec();
+
+  // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
+
+  res.render("index", {
+    title: "Posts",
+    posts: userPosts,
+    friends: friendUsers,
+    requesteds: requestedUsers,
+    requests: requestFromUsers,
+    users: users, // Pass the excluded users to the template
+  });
 });
 
 exports.index_post = [

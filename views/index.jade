@@ -24,17 +24,23 @@ block content
   ul
     for friend in friends
       | #{friend.username}
-  ul 
+      form(method='POST', action='/index/deleteFriend/' + friend._id)
+        button.btn.btn-danger(type='submit') Delete Friend 
+  ul
     for requested in requesteds 
-      | #{requested.username} Requested
+      | #{requested.friend.username} Requested
+      form(method='POST', action='/index/cancelRequest/' + requested.friend._id)
+        button.btn.btn-danger(type='submit') Cancel request
   ul 
     for request in requests 
-      | #{request.username} Request
+      | #{request.user.username} Request
+      form(method='POST', action='/index/rejectRequest/' + request.user._id)
+        button.btn.btn-danger(type='submit') Reject request
   ul 
     for user in users 
       | #{user.username} User
       form(method='POST', action='/index/sendRequest/' + user._id)
-        button.btn.btn-danger(type='submit') Friend request
+        button.btn.btn-danger(type='submit') Send Friend request
   ul
     for post in posts
       li

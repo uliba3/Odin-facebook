@@ -9,18 +9,15 @@ const asyncHandler = require("express-async-handler");
 exports.index = asyncHandler(async(req, res, next) => {
   const myId = req.user._id;
   const userPosts = await Post.find({ author: myId }).exec();
-  const friendUsers = await Friendship.find({ 
-      $or: [
-        {user: myId, status: 'accepted'},
-        { friendId: myId, status: 'accepted'}
-      ] 
-  });
+  const friendUsers1 = await Friendship.find({user: myId, status: 'accepted'});
+  const friendUsers2 = await Friendship.find({friend: myId, status: 'accepted'});
   const requestedUsers = await Friendship.find({user: myId, status: 'pending'});
-  const requestFromUsers = await Friendship.find({friendId: myId, status: 'pending'});
+  const requestFromUsers = await Friendship.find({friend: myId, status: 'pending'});
 
   const excludedUserIds = [
     myId, // Exclude the current user
-    ...friendUsers.map(friendship => friendship.friend),
+    ...friendUsers1.map(friendship => friendship.friend),
+    ...friendUsers2.map(friendship => friendship.user),
     ...requestedUsers.map(friendship => friendship.friend),
     ...requestFromUsers.map(friendship => friendship.user),
   ];
@@ -32,7 +29,8 @@ exports.index = asyncHandler(async(req, res, next) => {
   res.render("index", {
     title: "Posts",
     posts: userPosts,
-    friends: friendUsers,
+    friends1: friendUsers1,
+    friends2: friendUsers2,
     requesteds: requestedUsers,
     requests: requestFromUsers,
     users: users, // Pass the excluded users to the template

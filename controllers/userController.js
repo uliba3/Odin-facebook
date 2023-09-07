@@ -82,6 +82,27 @@ exports.rejectRequest = asyncHandler(async(req,res,next) => {
     res.redirect("/index");
 });
 
+exports.acceptRequest = asyncHandler(async(req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const myId = req.user._id;
+
+        // Check if a pending friendship request already exists
+        const existingFriendship = await Friendship.findOne({
+            user: userId,
+            friend: myId,
+            status: 'pending'
+        }).exec();
+        // Friendship request already exists, update its status to "accepted"
+        existingFriendship.status = 'accepted';
+        await existingFriendship.save(); // Save the updated status
+        res.redirect("/index");
+    } catch (error) {
+        // Handle any errors that may occur during the process
+        next(error);
+    }
+})
+
 exports.deleteFriend = asyncHandler(async(req, res, next) => {
     const userId = req.params.id;
     const myId = req.user._id;

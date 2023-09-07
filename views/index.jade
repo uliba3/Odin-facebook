@@ -22,9 +22,14 @@ block content
       form(method='POST', action='/index/sendRequest/' + user._id)
         button.btn.btn-danger(type='submit') Friend request
   ul
-    for friend in friends
-      | #{friend.username}
-      form(method='POST', action='/index/deleteFriend/' + friend._id)
+    for friend in friends1
+      | #{friend.friend}
+      form(method='POST', action='/index/deleteFriend/' + friend.friend._id)
+        button.btn.btn-danger(type='submit') Delete Friend 
+  ul
+    for friend in friends2
+      | #{friend.user.username}
+      form(method='POST', action='/index/deleteFriend/' + friend.user._id)
         button.btn.btn-danger(type='submit') Delete Friend 
   ul
     for requested in requesteds 
@@ -34,6 +39,8 @@ block content
   ul 
     for request in requests 
       | #{request.user.username} Request
+      form(method='POST', action='/index/acceptRequest/' + request.user._id)
+        button.btn.btn-danger(type='submit') Accept request
       form(method='POST', action='/index/rejectRequest/' + request.user._id)
         button.btn.btn-danger(type='submit') Reject request
   ul 

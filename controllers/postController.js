@@ -9,10 +9,28 @@ const asyncHandler = require("express-async-handler");
 exports.index = asyncHandler(async(req, res, next) => {
   const myId = req.user._id;
   const userPosts = await Post.find({ author: myId }).exec();
-  const friendUsers1 = await Friendship.find({user: myId, status: 'accepted'});
-  const friendUsers2 = await Friendship.find({friend: myId, status: 'accepted'});
-  const requestedUsers = await Friendship.find({user: myId, status: 'pending'});
-  const requestFromUsers = await Friendship.find({friend: myId, status: 'pending'});
+  const friendUsers1Friendship = await Friendship.find({user: myId, status: 'accepted'});
+  const friendUsers2Friendship = await Friendship.find({friend: myId, status: 'accepted'});
+  const requestedUsersFriendship = await Friendship.find({user: myId, status: 'pending'});
+  const requestFromUsersFriendship = await Friendship.find({friend: myId, status: 'pending'});
+
+  const friendUsers1Ids = friendUsers1Friendship.map(friendship => friendship.friend);
+  const friendUsers2Ids = friendUsers2Friendship.map(friendship => friendship.user);
+  const requestedUsersIds = requestedUsersFriendship.map(friendship => friendship.friend);
+  const requestFromUsersIds = requestFromUsersFriendship.map(friendship => friendship.user);
+
+  // Fetch user information for friendUsers1
+  const friendUsers1 = await User.find({ _id: { $in: friendUsers1Ids } }).exec();
+
+  // Fetch user information for friendUsers2
+  const friendUsers2 = await User.find({ _id: { $in: friendUsers2Ids } }).exec();
+
+  // Fetch user information for requestedUsers
+  const requestedUsers = await User.find({ _id: { $in: requestedUsersIds } }).exec();
+
+  // Fetch user information for requestFromUsers
+  const requestFromUsers = await User.find({ _id: { $in: requestFromUsersIds } }).exec();
+
 
   const excludedUserIds = [
     myId, // Exclude the current user

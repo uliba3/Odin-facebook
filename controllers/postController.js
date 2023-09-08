@@ -8,7 +8,6 @@ const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res, next) => {
   const myId = req.user._id;
-  const userPosts = await Post.find({ author: myId }).exec();
   const friendUsers1Friendship = await Friendship.find({user: myId, status: 'accepted'});
   const friendUsers2Friendship = await Friendship.find({friend: myId, status: 'accepted'});
   const requestedUsersFriendship = await Friendship.find({user: myId, status: 'pending'});
@@ -41,24 +40,34 @@ exports.index = asyncHandler(async(req, res, next) => {
   ];
 
   const users = await User.find({ _id: { $nin: excludedUserIds } }).exec();
-  console.log("posts: ", userPosts);
+  /*console.log("posts: ", userPosts);
   
   console.log("friends1: ", friendUsers1);
   console.log("friendUsers2: ", friendUsers2);
   console.log("requestedUsers: ", requestedUsers);
   console.log("requestFromUsers: ", requestFromUsers);
-  console.log("users: ", users);
+  console.log("users: ", users);*/
 
+  const friendsIds = [
+    ...friendUsers1.map(user => user._id ),
+    ...friendUsers2.map(user => user._id ),
+  ]
+  console.log("friendsIds: ", friendsIds);
+
+  const myPosts = await Post.find({author: myId}).exec();
+
+  const friendPosts = await Post.find({ author: { $in: friendsIds } }).exec();
   // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
 
   res.render("index", {
     title: "Posts",
-    posts: userPosts,
     friends1: friendUsers1,
     friends2: friendUsers2,
     requesteds: requestedUsers,
     requests: requestFromUsers,
     users: users, // Pass the excluded users to the template
+    myPosts: myPosts,
+    friendPosts: friendPosts,
   });
 });
 

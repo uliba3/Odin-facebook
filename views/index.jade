@@ -43,8 +43,14 @@ block content
       form(method='POST', action='/index/sendRequest/' + user._id)
         button.btn.btn-danger(type='submit') Send Friend request
   ul
-    each post in posts
+    each myPost in myPosts
       li
-        | #{post.author} #{post.date} #{post.content}
-        form(method='POST', action='/index/delete/' + post._id)
+        | #{myPost.author} #{myPost.date} #{myPost.content}
+        form(method='POST', action='/index/delete/' + myPost._id)
           button.btn.btn-danger(type='submit') Delete
+  ul
+    each friendPost in friendPosts
+      li
+        | #{friendPost.author} #{friendPost.date} #{friendPost.content}
+        form(method='POST', action='/index/hide/' + friendPost._id)
+          button.btn.btn-danger(type='submit') hide

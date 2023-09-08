@@ -30,7 +30,6 @@ block content
       | #{requested.username} Requested
       form(method='POST', action='/index/cancelRequest/' + requested._id)
         button.btn.btn-danger(type='submit') Cancel request
-
   ul 
     each request in requests 
       | #{request.username} Request

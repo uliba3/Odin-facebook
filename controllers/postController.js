@@ -34,13 +34,20 @@ exports.index = asyncHandler(async(req, res, next) => {
 
   const excludedUserIds = [
     myId, // Exclude the current user
-    ...friendUsers1.map(friendship => friendship.friend),
-    ...friendUsers2.map(friendship => friendship.user),
-    ...requestedUsers.map(friendship => friendship.friend),
-    ...requestFromUsers.map(friendship => friendship.user),
+    ...friendUsers1.map(user => user._id ),
+    ...friendUsers2.map(user => user._id ),
+    ...requestedUsers.map(user => user._id ),
+    ...requestFromUsers.map(user => user._id ),
   ];
 
   const users = await User.find({ _id: { $nin: excludedUserIds } }).exec();
+  console.log("posts: ", userPosts);
+  
+  console.log("friends1: ", friendUsers1);
+  console.log("friendUsers2: ", friendUsers2);
+  console.log("requestedUsers: ", requestedUsers);
+  console.log("requestFromUsers: ", requestFromUsers);
+  console.log("users: ", users);
 
   // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
 

@@ -1,54 +1,70 @@
 //views/index.jade
-extends layout
+doctype html
+html 
+  head 
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style-index.css')
 
-block content
-  h1= title
-  form(method='POST' action='/log-out')
-    button.btn.btn-primary(type='submit') log-out
-  form(method='POST' action='/index/add')
-    div.form-group
-      label(for='content') content:
-      textarea#summary.form-control(type='textarea', placeholder='content' name='content' required='true') #{undefined===post? '' : post.content}
-    button.btn.btn-primary(type='submit') Submit
+  body
+    h1= title+' '+ myUserName
+    form(method='POST' action='/log-out')
+      button.btn.btn-primary(type='submit') log-out
+    form(method='POST' action='/index/add')
+      div.form-group
+        label(for='content') content:
+        textarea#summary.form-control(type='textarea', placeholder='content' name='content' required='true') #{undefined===post? '' : post.content}
+      button.btn.btn-primary(type='submit') Submit
 
-  if errors
-    ul
-      each error in errors
-        li!= error.msg
-  ul
-    each friend in friends1
-      | #{friend.username}
-      form(method='POST', action='/index/deleteFriend/' + friend._id)
-        button.btn.btn-danger(type='submit') Delete Friend 
-  ul
-    each friend in friends2
-      | #{friend.username}
-      form(method='POST', action='/index/deleteFriend/' + friend._id)
-        button.btn.btn-danger(type='submit') Delete Friend 
-  ul
-    each requested in requesteds 
-      | #{requested.username} Requested
-      form(method='POST', action='/index/cancelRequest/' + requested._id)
-        button.btn.btn-danger(type='submit') Cancel request
-  ul 
-    each request in requests 
-      | #{request.username} Request
-      form(method='POST', action='/index/acceptRequest/' + request._id)
-        button.btn.btn-danger(type='submit') Accept request
-      form(method='POST', action='/index/rejectRequest/' + request._id)
-        button.btn.btn-danger(type='submit') Reject request
-  ul 
-    each user in users 
-      | #{user.username} User
-      form(method='POST', action='/index/sendRequest/' + user._id)
-        button.btn.btn-danger(type='submit') Send Friend request
-  ul
-    each myPost in myPosts
-      li
-        | #{myPost.authorName} #{myPost.date} #{myPost.content}
-        form(method='POST', action='/index/delete/' + myPost._id)
-          button.btn.btn-danger(type='submit') Delete
-  ul
-    each friendPost in friendPosts
-      li
-        | #{friendPost.authorName} #{friendPost.date} #{friendPost.content}
+    if errors
+      ul
+        each error in errors
+          li!= error.msg
+    ul.friends
+      each friend in friends1
+        li
+          | #{friend.username}
+          form(method='POST', action='/index/deleteFriend/' + friend._id)
+            button.btn.btn-danger(type='submit') Delete Friend 
+      each friend in friends2
+        li
+          | #{friend.username}
+          form(method='POST', action='/index/deleteFriend/' + friend._id)
+          button.btn.btn-danger(type='submit') Delete Friend 
+      each requested in requesteds 
+        li
+          | #{requested.username} Requested
+          form(method='POST', action='/index/cancelRequest/' + requested._id)
+            button.btn.btn-danger(type='submit') Cancel request
+      each request in requests 
+        li
+          | #{request.username} Request
+          form(method='POST', action='/index/acceptRequest/' + request._id)
+            button.btn.btn-danger(type='submit') Accept request
+          form(method='POST', action='/index/rejectRequest/' + request._id)
+            button.btn.btn-danger(type='submit') Reject request
+      each user in users 
+        li
+          | #{user.username} User
+          form(method='POST', action='/index/sendRequest/' + user._id)
+            button.btn.btn-danger(type='submit') Send Friend request
+    ul.posts
+      each myPost in myPosts
+        li
+          div.inf
+            div.authorName
+              | #{myPost.authorName}
+            div.date
+              | #{myPost.date}
+          div.content
+            | #{myPost.content}
+            form(method='POST', action='/index/delete/' + myPost._id)
+              button.btn.btn-danger(type='submit') Delete
+      each friendPost in friendPosts
+        li
+          div.inf
+            div.authorName
+              | #{friendPost.authorName}
+            div.date
+              | #{friendPost.date}
+          div.content
+            | #{friendPost.content}

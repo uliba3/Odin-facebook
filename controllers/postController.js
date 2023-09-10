@@ -8,6 +8,7 @@ const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async(req, res, next) => {
   const myId = req.user._id;
+  const myUserName = req.user.username;
   const friendUsers1Friendship = await Friendship.find({user: myId, status: 'accepted'});
   const friendUsers2Friendship = await Friendship.find({friend: myId, status: 'accepted'});
   const requestedUsersFriendship = await Friendship.find({user: myId, status: 'pending'});
@@ -66,6 +67,7 @@ exports.index = asyncHandler(async(req, res, next) => {
 
   res.render("index", {
     title: "Posts",
+    myUserName: myUserName,
     friends1: friendUsers1,
     friends2: friendUsers2,
     requesteds: requestedUsers,

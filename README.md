@@ -12,7 +12,6 @@ FriendBook is a simple social media platform where users can create posts, conne
   - [Configuration](#configuration)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 FriendBook offers the following features:
@@ -97,6 +96,3 @@ If you'd like to contribute to this project, please follow these guidelines:
 - Commit your changes: `git commit -m "Description of your changes"`.
 - Push to your fork: `git push origin feature-name`.
 - Create a pull request to the `main` branch of the original repository.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

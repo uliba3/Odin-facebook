@@ -1,0 +1,31 @@
+//views/friendsPosts.jade
+doctype html
+html 
+  head 
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style-index.css')
+
+  body
+    h1= title
+    div.main 
+        ul.friends
+            each friend in friends1
+                li
+                a(href="/friendPosts/" + friend._id) #{friend.username}
+                form(method='POST', action='/index/deleteFriend/' + friend._id)
+                    button.btn.btn-danger(type='submit') Delete Friend 
+            each friend in friends2
+                li
+                a(href="/friendPosts/" + friend._id) #{friend.username}
+                form(method='POST', action='/index/deleteFriend/' + friend._id)
+                button.btn.btn-danger(type='submit') Delete Friend 
+        ul.posts
+            each friendsPost in friendsPosts
+                li
+                div.inf
+                    div.authorName
+                    a(href="/friendPosts/" + friendsPost.author) #{friendsPost.authorName}
+                    div.date
+                    | #{friendsPost.date}
+                div.content
+                    | #{friendsPost.content}

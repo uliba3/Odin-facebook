@@ -44,6 +44,9 @@ router.get("/index", post_controller.index);
 router.post("/index/add", post_controller.index_post);
 router.post("/index/delete/:id", post_controller.delete_post);
 
+router.get("/friendsPosts", post_controller.friendsPosts);
+router.get("/friendPosts/:id", post_controller.friendPosts);
+
 router.post("/index/sendRequest/:id", user_controller.sendRequest);
 router.post("/index/cancelRequest/:id", user_controller.cancelRequest);
 router.post("/index/rejectRequest/:id", user_controller.rejectRequest);

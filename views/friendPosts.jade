@@ -1,0 +1,19 @@
+//views/friendPosts.jade
+doctype html
+html 
+  head 
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style-index.css')
+
+  body
+    h1= friendName + "'s posts"
+    ul.posts
+      each friendPost in friendPosts
+        li
+          div.inf
+            div.authorName
+              | #{friendPost.authorName}
+            div.date
+              | #{friendPost.date}
+          div.content
+            | #{friendPost.content}

@@ -1,4 +1,5 @@
 /* Reset some default browser styles */
+/*/stylesheets/style-index.css*/
 body, h1, ul, li, button, textarea {
     margin: 0;
     padding: 0;

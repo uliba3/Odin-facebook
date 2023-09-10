@@ -61,6 +61,9 @@ exports.index = asyncHandler(async(req, res, next) => {
   const friendPosts = await Post.find({ author: { $in: friendsIds } }).exec();
   // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
 
+  myPosts.sort((a, b) => b.date - a.date);
+  friendPosts.sort((a, b) => b.date - a.date);
+
   res.render("index", {
     title: "Posts",
     friends1: friendUsers1,

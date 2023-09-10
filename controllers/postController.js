@@ -56,6 +56,8 @@ exports.index = asyncHandler(async(req, res, next) => {
 
   const myPosts = await Post.find({author: myId}).exec();
 
+  const myUser = await User.find({_id: myId }).exec();
+
   const friendPosts = await Post.find({ author: { $in: friendsIds } }).exec();
   // Your existing code to fetch userPosts, friendUsers, requestedUsers, and requestFromUsers
 
@@ -85,6 +87,7 @@ exports.index_post = [
         // Create a Post object with escaped and trimmed data.
         const post = new Post({
           author: req.user._id,
+          authorName: req.user.username,
           content: req.body.content,
           date: today,
         });

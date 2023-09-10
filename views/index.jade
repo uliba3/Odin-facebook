@@ -45,12 +45,10 @@ block content
   ul
     each myPost in myPosts
       li
-        | #{myPost.author} #{myPost.date} #{myPost.content}
+        | #{myPost.authorName} #{myPost.date} #{myPost.content}
         form(method='POST', action='/index/delete/' + myPost._id)
           button.btn.btn-danger(type='submit') Delete
   ul
     each friendPost in friendPosts
       li
-        | #{friendPost.author} #{friendPost.date} #{friendPost.content}
-        form(method='POST', action='/index/hide/' + friendPost._id)
-          button.btn.btn-danger(type='submit') hide
+        | #{friendPost.authorName} #{friendPost.date} #{friendPost.content}

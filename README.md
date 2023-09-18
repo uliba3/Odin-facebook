@@ -13,7 +13,7 @@ Odin-facebook is a simple social media platform where users can create posts, co
 - [Contributing](#contributing)
 
 ## Features
-FriendBook offers the following features:
+Odin-facebook offers the following features:
 
 - User authentication (sign-up, log-in, and log-out).
 - Creating, deleting, and viewing user posts.

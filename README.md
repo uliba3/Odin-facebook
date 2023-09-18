@@ -1,7 +1,7 @@
 # Odin-facebook
-# FriendBook - A Social Media Platform
+# Odin-facebook - A Social Media Platform
 
-FriendBook is a simple social media platform where users can create posts, connect with friends, send friend requests, and interact with each other's posts. This README provides an overview of the project's structure, functionality, and how to set it up.
+Odin-facebook is a simple social media platform where users can create posts, connect with friends, send friend requests, and interact with each other's posts. This README provides an overview of the project's structure, functionality, and how to set it up.
 
 ## Table of Contents
 - [Features](#features)
